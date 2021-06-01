@@ -44,7 +44,8 @@ module.exports = {
 
 	// выходной файл в который всё будет компилится
 	output: {
-		filename: filename('js'), // hash чтобы скачивалась актуальная версия, а не с кеша
+		// hash чтобы скачивалась актуальная версия, а не с кеша
+		filename: filename('js'),
 		path: path.resolve(__dirname, 'dist')
 	},
 
@@ -52,7 +53,8 @@ module.exports = {
 	resolve: {
 
 		// если webpack увидит файлы с одинаковым именем но с разыми
-		// расширениями, он обработает первым с указанным расширением, а другие отклонит
+		// расширениями, он обработает первым с
+		// указанным расширением, а другие отклонит
 		extensions: ['.js'],
 
 		// упрощение указания пути к файлу
@@ -68,7 +70,7 @@ module.exports = {
 	// настройка автообновления браузера
 	devServer: {
 		port: 3000,
-		hot: isDev,
+		// hot: isDev,
 	},
 	target: isDev ? 'web' : 'browserslist',
 
@@ -77,8 +79,9 @@ module.exports = {
 		new CleanWebpackPlugin(),
 
 		new HTMLWebpackPlugin({
-			// html файл который будет генерировать (т.к. context указывает путь к папке src, то просто указуем название)
-			template: 'index.html', 
+			// html файл который будет генерировать
+			// (т.к. context указывает путь к папке src, то просто указуем название)
+			template: './index.html',
 			minify: {
 				removeComments: isProd, // минификация только в production
 				collapseWhitespace: isProd,
@@ -89,7 +92,7 @@ module.exports = {
 			// копируем файлы
 	      patterns: [
 	        {
-	        	from: path.resolve(__dirname, 'src/favicon.ico'),// откуда строка
+	        	from: path.resolve(__dirname, 'src/favicon.ico'), // откуда строка
 	         to: path.resolve(__dirname, 'dist') // куда
 	      	},
 	      ],
