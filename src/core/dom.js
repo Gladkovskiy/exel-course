@@ -41,6 +41,26 @@ class Dom {
   off(eventType, callback) {
     this.$el.removeEventListener(eventType, callback)
   }
+
+  closest(selector) {
+    return $(this.$el.closest(selector))
+  }
+
+  getCoords() {
+    return this.$el.getBoundingClientRect()
+  }
+
+  get data() {
+    return this.$el.dataset
+  }
+
+  findAll(selector) {
+    return this.$el.querySelectorAll(selector)
+  }
+
+  css(style = {}) {
+    return Object.keys(style).forEach(e => (this.$el.style[e] = style[e]))
+  }
 }
 
 // возвращаем интнас долара чтобы не писать каждый раз new
