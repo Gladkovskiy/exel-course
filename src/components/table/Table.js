@@ -1,6 +1,5 @@
 import {ExcelComponents} from '../../core/ExcelComponent.js'
 import {createTable} from './table.template.js'
-// import {$} from '../../core/dom'
 import {resizeHandler} from './table.resize.js'
 import {shouldResize} from './table.function.js'
 
