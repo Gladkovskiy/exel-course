@@ -1,18 +1,23 @@
 import {$} from '../../core/dom.js'
+import {Emitter} from '../../core/Emmiter.js'
 // класс для рендеринга компонентов на странице
 export class Excel {
   // selector - точка входа, options - объект с массивом компонентов
   constructor(selector, options) {
     this.$el = $(selector)
     this.components = options.components || []
+    this.emitter = new Emitter()
   }
 
   getRoot() {
     const $root = $.create('div', 'exel')
+    const componentOptions = {
+      emitter: this.emitter,
+    }
 
     this.components = this.components.map(Component => {
       const $el = $.create('div', Component.className)
-      const component = new Component($el)
+      const component = new Component($el, componentOptions)
       $el.html(component.toHtml())
       $root.append($el)
       return component
@@ -27,5 +32,9 @@ export class Excel {
     this.components.forEach(component => {
       component.init()
     })
+  }
+
+  destroy() {
+    this.components.forEach(component => component.destroy())
   }
 }
