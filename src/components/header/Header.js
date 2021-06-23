@@ -1,4 +1,6 @@
 import {ExcelComponents} from '../../core/ExcelComponent.js'
+import {changeTitle} from '../../redux/actions.js'
+import {defaultTitle} from '../../constants'
 
 export class Header extends ExcelComponents {
   static className = 'exel__header'
@@ -6,13 +8,15 @@ export class Header extends ExcelComponents {
   constructor($root, options) {
     super($root, {
       name: 'Header',
+      listeners: ['input'],
       ...options,
     })
   }
 
   toHtml() {
+    const title = this.store.getState().title || defaultTitle
     return `
-		<input type="text" class="input" value="Новая таблица">
+		<input type="text" class="input" value="${title}">
 				<div>
 					<div class="button">
 						<span class="material-icons">
@@ -26,5 +30,9 @@ export class Header extends ExcelComponents {
 					</div>
 				</div>
 				`
+  }
+
+  onInput(event) {
+    this.$dispatch(changeTitle(event.target.value))
   }
 }

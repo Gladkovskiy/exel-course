@@ -1,18 +1,22 @@
 import {$} from '../../core/dom.js'
 import {Emitter} from '../../core/Emmiter.js'
+import {StoreSubscribe} from '../../core/storeSubscriber.js'
 // класс для рендеринга компонентов на странице
 export class Excel {
   // selector - точка входа, options - объект с массивом компонентов
   constructor(selector, options) {
     this.$el = $(selector)
     this.components = options.components || []
+    this.store = options.store
     this.emitter = new Emitter()
+    this.subscriber = new StoreSubscribe(this.store)
   }
 
   getRoot() {
     const $root = $.create('div', 'exel')
     const componentOptions = {
       emitter: this.emitter,
+      store: this.store,
     }
 
     this.components = this.components.map(Component => {
@@ -29,12 +33,15 @@ export class Excel {
   render() {
     this.$el.append(this.getRoot())
 
+    this.subscriber.subscribeComponents(this.components)
+
     this.components.forEach(component => {
       component.init()
     })
   }
 
   destroy() {
+    this.subscriber.unsubscribeFromeStore()
     this.components.forEach(component => component.destroy())
   }
 }
