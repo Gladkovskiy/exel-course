@@ -1,11 +1,11 @@
 import {$} from '../../core/dom.js'
 import {Emitter} from '../../core/Emmiter.js'
 import {StoreSubscribe} from '../../core/storeSubscriber.js'
+import {updateDate} from '../../redux/actions.js'
 // класс для рендеринга компонентов на странице
 export class Excel {
   // selector - точка входа, options - объект с массивом компонентов
-  constructor(selector, options) {
-    this.$el = $(selector)
+  constructor(options) {
     this.components = options.components || []
     this.store = options.store
     this.emitter = new Emitter()
@@ -30,11 +30,9 @@ export class Excel {
     return $root
   }
 
-  render() {
-    this.$el.append(this.getRoot())
-
+  init() {
+    this.store.dispatch(updateDate())
     this.subscriber.subscribeComponents(this.components)
-
     this.components.forEach(component => {
       component.init()
     })
