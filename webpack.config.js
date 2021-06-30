@@ -15,12 +15,13 @@ const filename = ext => (isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`)
 // Функция для добавления eslint в лоадеры js для режима development
 const jsLoaders = () => {
   const loaders = [
-    {
+    'babel-loader', // после прописвания отдельного файла babel.config.js
+    /* {
       loader: 'babel-loader',
       options: {
         presets: ['@babel/preset-env'],
       },
-    },
+    }, */
   ]
 
   if (isDev) {
